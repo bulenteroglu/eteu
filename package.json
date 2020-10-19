@@ -1,0 +1,8 @@
+{
+  "name": "eteu",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bulenteroglu/eteu.git",
+  "author": "Bulent Eroglu <eroglu.bulent98@Gmail.com>",
+  "license": "MIT"
+}
