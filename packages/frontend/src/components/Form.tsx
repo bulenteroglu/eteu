@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { NewLineKind } from "typescript";
 import data from "../api/eteu.json";
 
-function SelectOption({ countries }: any) {
-  return <option>hu</option>;
+function SelectOption({ name }: { name: string }) {
+  return <option>{name}</option>;
 }
 
 export default function Form() {
-  const [countries, setCountries] = useState<{} | null>(null);
-  useEffect(() => {
-    data.map((temp) => {
-      setCountries(temp);
-    });
-  });
+  const [countries, _] = useState(data);
 
   return (
     <div className='text-white mt-12 flex flex-col items-center justify-center'>
@@ -45,7 +41,9 @@ export default function Form() {
             className='block appearance-none w-full bg-gray-800 border text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none outline-none'
             multiple
           >
-            <SelectOption countries={countries} />
+            {data.map((countries: any) => (
+              <SelectOption name={countries.name} />
+            ))}
           </select>
         </div>
       </div>
