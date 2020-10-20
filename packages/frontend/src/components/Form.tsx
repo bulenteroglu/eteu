@@ -6,7 +6,7 @@ function SelectOption({ name }: { name: string }) {
 }
 
 export default function Form() {
-  const [countries, setCountries] = useState<Array<{ name: string }>>([]);
+  const [countries, setCountries] = useState<Array<string>>([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -78,6 +78,7 @@ export default function Form() {
         <div>Continents and countries</div>
         <div>
           <select
+            value={countries}
             onChange={(e) => handleChange(e)}
             required
             className='block appearance-none w-full bg-gray-800 border text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none outline-none'
