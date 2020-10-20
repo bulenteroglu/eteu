@@ -9,6 +9,8 @@ export default function Form() {
   const [countries, setCountries] = useState<Array<string>>([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [deleteButton, setDeleteButton] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   function handleChange(e: any) {
     setCountries(
@@ -29,16 +31,31 @@ export default function Form() {
         countries,
       })
     );
+    setDeleteButton(true);
+    setChecked(false);
   }
 
   useEffect(() => {
     if (localStorage.getItem("you Markkus?")) {
+      setDeleteButton(true);
       const data = JSON.parse(localStorage.getItem("you Markkus?") || "{}");
       setFirstName(data.firstName);
       setLastName(data.lastName);
       setCountries(data.countries);
+    } else {
+      setDeleteButton(false);
+      setChecked(false);
     }
   }, []);
+
+  function handleDelete() {
+    localStorage.removeItem("you Markkus?");
+    setFirstName("");
+    setLastName("");
+    setCountries([]);
+    setDeleteButton(false);
+    setChecked(false);
+  }
 
   return (
     <form
@@ -92,17 +109,32 @@ export default function Form() {
       </div>
       <div className='mt-12'>
         <label className='block text-gray-500 font-bold'>
-          <input className='mr-2 leading-tight' type='checkbox' required />
+          <input
+            className='mr-2 leading-tight'
+            type='checkbox'
+            required
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+          />
           <span className='text-sm'>I agree with terms and conditions</span>
         </label>
       </div>
-      <div className='mt-4 flex items-center justify-center'>
+      <div className='mt-4 flex items-center space-x-6'>
         <button
           type='submit'
           className='bg-teal-300 text-black italic text-xl px-5 py-2 font-bold rounded-md shadow focus:outline-none hover:bg-teal-600 transition duration-300'
         >
           Save
         </button>
+
+        {deleteButton && (
+          <button
+            onClick={handleDelete}
+            className='bg-red-800 text-white italic text-xl px-5 py-2 font-bold rounded-md shadow focus:outline-none hover:bg-red-900 transition duration-300'
+          >
+            Delete Data
+          </button>
+        )}
       </div>
     </form>
   );
